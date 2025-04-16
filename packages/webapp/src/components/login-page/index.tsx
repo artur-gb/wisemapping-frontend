@@ -15,7 +15,7 @@ import { ErrorInfo, LoginErrorInfo } from '../../classes/client';
 import { ClientContext } from '../../classes/provider/client-context';
 import { Box } from '@mui/material';
 import { TextButton } from '../form/sign-in-button';
-import CommunexLogo from '../../assets/communex';
+import CommunexLogo from '../common/communex-icon';
 import PasswordInput from '../form/password-input';
 
 export type Model = {
