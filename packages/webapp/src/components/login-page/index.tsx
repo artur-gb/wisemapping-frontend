@@ -1,15 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
-import Header from '../layout/header';
-import Footer from '../layout/footer';
+import { useIntl } from 'react-intl';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SubmitButton from '../form/submit-button';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import FormContainer from '../layout/form-container';
-import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
 import ReactGA from 'react-ga4';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
@@ -18,7 +14,7 @@ import { useMutation } from 'react-query';
 import { ErrorInfo, LoginErrorInfo } from '../../classes/client';
 import { ClientContext } from '../../classes/provider/client-context';
 import { Box } from '@mui/material';
-import { SignInButton } from '../form/sign-in-button';
+import { TextButton } from '../form/sign-in-button';
 import CommunexLogo from '../../assets/communex';
 import PasswordInput from '../form/password-input';
 
@@ -124,7 +120,7 @@ const LoginPage = (): React.ReactElement => {
           </Box>
           <LoginError errorCode={loginError} />
 
-          <FormControl style={{marginTop: 0}}>
+          <FormControl>
             <form onSubmit={handleOnSubmit}>
               <Input
                 onChange={handleOnChange}
@@ -146,6 +142,7 @@ const LoginPage = (): React.ReactElement => {
                 })}
                 required
                 autoComplete="current-password"
+                sx={{ mt: '1rem' }}
               />
               <SubmitButton
                 value={intl.formatMessage({
@@ -163,12 +160,12 @@ const LoginPage = (): React.ReactElement => {
             width="100%"
             mt={2}
           >
-            <SignInButton
+            <TextButton
               to="/c/registration"
               label="header.donthaveaccount"
               defaultMessage="Register now"
             />
-            <SignInButton
+            <TextButton
               to="/c/forgot-password"
               label="login.forgotpwd"
               defaultMessage="Forgot Password?"
@@ -182,7 +179,7 @@ const LoginPage = (): React.ReactElement => {
             width="100%"
             mt={2}
           >
-            <SignInButton
+            <TextButton
               to="https://www.intrakommuna.de/datenschutz"
               label="footer.termsandconditions"
               defaultMessage="Term And Conditions"

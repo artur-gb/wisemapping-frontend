@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import { ClientContext } from '../../classes/provider/client-context';
 import Button from '@mui/material/Button';
+import { Box } from '@mui/material';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');
@@ -43,60 +44,78 @@ const ForgotPassword = () => {
 
   if (showOauthMessage) {
     return (
-      <FormContainer>
-        <Typography>
-          <FormattedMessage
-            id="forgot.oauth.message"
-            defaultMessage="You dont need password, please login using Google."
-          />
-        </Typography>
-        <Button
-          color="primary"
-          size="medium"
-          variant="contained"
-          component={RouterLink}
-          to="/c/login"
-          disableElevation={true}
-        >
-          <FormattedMessage id="forgot.oauth.back" defaultMessage="Back to login" />
-        </Button>
-      </FormContainer>
+      <Box
+        sx={{
+          height: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <FormContainer>
+          <Typography>
+            <FormattedMessage
+              id="forgot.oauth.message"
+              defaultMessage="You dont need password, please login using Google."
+            />
+          </Typography>
+          <Button
+            color="primary"
+            size="medium"
+            variant="contained"
+            component={RouterLink}
+            to="/c/login"
+            disableElevation={true}
+          >
+            <FormattedMessage id="forgot.oauth.back" defaultMessage="Back to login" />
+          </Button>
+        </FormContainer>
+      </Box>
     );
   }
 
   return (
-    <FormContainer maxWidth="xs">
-      <Typography variant="h4" component="h1">
-        <FormattedMessage id="forgot.title" defaultMessage="Reset your password" />
-      </Typography>
+    <Box
+      sx={{
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center', 
+        justifyContent: 'center',
+      }}
+    >
+      <FormContainer maxWidth="xs">
+        <Typography variant="h4" component="h1">
+          <FormattedMessage id="forgot.title" defaultMessage="Reset your password" />
+        </Typography>
 
-      <Typography>
-        <FormattedMessage
-          id="forgot.desc"
-          defaultMessage="We will send you an email to reset your password."
-        />
-      </Typography>
+        <Typography>
+          <FormattedMessage
+            id="forgot.desc"
+            defaultMessage="We will send you an email to reset your password."
+          />
+        </Typography>
 
-      <GlobalError error={error} />
+        <GlobalError error={error} />
 
-      <form onSubmit={handleOnSubmit}>
-        <Input
-          type="email"
-          name="email"
-          label={intl.formatMessage({ id: 'forgot.email', defaultMessage: 'Email' })}
-          autoComplete="email"
-          onChange={(e) => setEmail(e.target.value)}
-          error={error}
-        />
+        <form onSubmit={handleOnSubmit}>
+          <Input
+            type="email"
+            name="email"
+            label={intl.formatMessage({ id: 'forgot.email', defaultMessage: 'Email' })}
+            autoComplete="email"
+            onChange={(e) => setEmail(e.target.value)}
+            error={error}
+          />
 
-        <SubmitButton
-          value={intl.formatMessage({
-            id: 'forgot.register',
-            defaultMessage: 'Send recovery link',
-          })}
-        />
-      </form>
-    </FormContainer>
+          <SubmitButton
+            value={intl.formatMessage({
+              id: 'forgot.register',
+              defaultMessage: 'Send recovery link',
+            })}
+          />
+        </form>
+      </FormContainer>
+    </Box>
   );
 };
 

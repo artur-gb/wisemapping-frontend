@@ -9,7 +9,7 @@ interface ButtonProps {
   defaultMessage: string;
 }
 
-export const SignInButton = ({
+export const TextButton = ({
   className,
   to,
   label,

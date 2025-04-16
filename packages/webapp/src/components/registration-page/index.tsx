@@ -14,11 +14,10 @@ import AppConfig from '../../classes/app-config';
 import ReactGA from 'react-ga4';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
-import { Link as RouterLink } from 'react-router-dom';
 import { recaptchaContainerStyle } from './style';
 import { ClientContext } from '../../classes/provider/client-context';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
+import { TextButton } from '../form/sign-in-button';
 
 export type Model = {
   email: string;
@@ -75,124 +74,138 @@ const RegistrationForm = () => {
   };
 
   return (
-    <Grid container justifyContent="center">
-      <Grid container spacing={0} justifyContent="center" alignItems="scretch" textAlign="center">
-        <Grid item md={5} xs={12} justifyContent="center">
-          <Typography variant="h4" component="h1">
-            <FormattedMessage id="registration.title" defaultMessage="Become a member" />
-          </Typography>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+      }}
+    >
+      <Grid container justifyContent="center">
+        <Grid container spacing={0} justifyContent="center" alignItems="scretch" textAlign="center">
+          <Grid item md={5} xs={12} justifyContent="center">
+            <Typography variant="h4" component="h1">
+              <FormattedMessage id="registration.title" defaultMessage="Become a member" />
+            </Typography>
 
-          <Typography paragraph>
-            <FormattedMessage
-              id="registration.desc"
-              defaultMessage="Signing up is free and just take a moment "
+            <Typography paragraph>
+              <FormattedMessage
+                id="registration.desc"
+                defaultMessage="Signing up is free and just take a moment "
+              />
+            </Typography>
+            <GoogleButton
+              text={intl.formatMessage({
+                id: 'registration.google.button',
+                defaultMessage: 'Sign up with Google',
+              })}
+              onClick={handleRegisterWithGoogleClick}
             />
-          </Typography>
-          <GoogleButton
-            text={intl.formatMessage({
-              id: 'registration.google.button',
-              defaultMessage: 'Sign up with Google',
-            })}
-            onClick={handleRegisterWithGoogleClick}
-          />
-        </Grid>
-        <Grid item md={2} xs={12}>
-          <Separator
-            responsive={true}
-            maxWidth={maxFormWidth}
-            text={intl.formatMessage({
-              id: 'registration.division',
-              defaultMessage: 'or',
-            })}
-          />
-        </Grid>
-        <Grid item md={5} xs={12}>
-          <FormControl css={{ maxWidth: maxFormWidth }}>
-            <form onSubmit={handleOnSubmit}>
-              <GlobalError error={error} />
-              <Input
-                name="email"
-                type="email"
-                onChange={handleOnChange}
-                label={intl.formatMessage({
-                  id: 'registration.email',
-                  defaultMessage: 'Email',
-                })}
-                autoComplete="email"
-                error={error}
-              />
-              <Input
-                name="firstname"
-                type="text"
-                onChange={handleOnChange}
-                label={intl.formatMessage({
-                  id: 'registration.firstname',
-                  defaultMessage: 'First Name',
-                })}
-                autoComplete="given-name"
-                error={error}
-              />
-              <Input
-                name="lastname"
-                type="text"
-                onChange={handleOnChange}
-                label={intl.formatMessage({
-                  id: 'registration.lastname',
-                  defaultMessage: 'Last Name',
-                })}
-                autoComplete="family-name"
-                error={error}
-              />
-              <Input
-                name="password"
-                type="password"
-                onChange={handleOnChange}
-                label={intl.formatMessage({
-                  id: 'registration.password',
-                  defaultMessage: 'Password',
-                })}
-                autoComplete="new-password"
-                error={error}
-                maxLength={30}
-              />
-
-              {AppConfig.isRecaptcha2Enabled() && (
-                <>
-                  {/* eslint-disable-next-line react/no-unknown-property */}
-                  <div css={recaptchaContainerStyle}>
-                    <ReCAPTCHA
-                      ref={(el) => setCaptcha(el)}
-                      sitekey={AppConfig.getRecaptcha2SiteKey()}
-                      onChange={(value: string) => {
-                        model.recaptcha = value;
-                        setModel(model);
-                      }}
-                    />
-                  </div>
-                </>
-              )}
-              <div style={{ fontSize: '12px', padding: '10px 0px' }}>
-                <FormattedMessage
-                  id="registration.termandconditions"
-                  defaultMessage="Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
+          </Grid>
+          <Grid item md={2} xs={12}>
+            <Separator
+              responsive={true}
+              maxWidth={maxFormWidth}
+              text={intl.formatMessage({
+                id: 'registration.division',
+                defaultMessage: 'or',
+              })}
+            />
+          </Grid>
+          <Grid item md={5} xs={12}>
+            <FormControl css={{ maxWidth: maxFormWidth }}>
+              <form onSubmit={handleOnSubmit}>
+                <GlobalError error={error} />
+                <Input
+                  name="email"
+                  type="email"
+                  onChange={handleOnChange}
+                  label={intl.formatMessage({
+                    id: 'registration.email',
+                    defaultMessage: 'Email',
+                  })}
+                  autoComplete="email"
+                  error={error}
                 />
-              </div>
-              <SubmitButton
-                value={intl.formatMessage({
-                  id: 'registration.register',
-                  defaultMessage: 'Register',
-                })}
-              />
-            </form>
-          </FormControl>
+                <Input
+                  name="firstname"
+                  type="text"
+                  onChange={handleOnChange}
+                  label={intl.formatMessage({
+                    id: 'registration.firstname',
+                    defaultMessage: 'First Name',
+                  })}
+                  autoComplete="given-name"
+                  error={error}
+                  sx={{ mt: '1rem' }}
+                />
+                <Input
+                  name="lastname"
+                  type="text"
+                  onChange={handleOnChange}
+                  label={intl.formatMessage({
+                    id: 'registration.lastname',
+                    defaultMessage: 'Last Name',
+                  })}
+                  autoComplete="family-name"
+                  error={error}
+                  sx={{ mt: '1rem' }}
+                />
+                <Input
+                  name="password"
+                  type="password"
+                  onChange={handleOnChange}
+                  label={intl.formatMessage({
+                    id: 'registration.password',
+                    defaultMessage: 'Password',
+                  })}
+                  autoComplete="new-password"
+                  error={error}
+                  maxLength={30}
+                  sx={{ mt: '1rem' }}
+                />
+
+                {AppConfig.isRecaptcha2Enabled() && (
+                  <>
+                    {/* eslint-disable-next-line react/no-unknown-property */}
+                    <div css={recaptchaContainerStyle}>
+                      <ReCAPTCHA
+                        ref={(el) => setCaptcha(el)}
+                        sitekey={AppConfig.getRecaptcha2SiteKey()}
+                        onChange={(value: string) => {
+                          model.recaptcha = value;
+                          setModel(model);
+                        }}
+                      />
+                    </div>
+                  </>
+                )}
+                <div style={{ fontSize: '12px', padding: '10px 0px' }}>
+                  <FormattedMessage
+                    id="registration.termandconditions"
+                    defaultMessage="Terms of Client: Please check the WiseMapping Account information you've entered above, and review the Terms of Client here. By clicking on 'Register' below you are agreeing to the Terms of Client above and the Privacy Policy"
+                  />
+                </div>
+                <SubmitButton
+                  value={intl.formatMessage({
+                    id: 'registration.register',
+                    defaultMessage: 'Register',
+                  })}
+                />
+              </form>
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <TextButton
+            to="/c/login"
+            label="header.haveaccount"
+            defaultMessage="Already have an account?"
+          />
         </Grid>
       </Grid>
-      <Grid item>
-        <Link component={RouterLink} to="/c/login">
-          <FormattedMessage id="header.haveaccount" defaultMessage="Already have an account?" />
-        </Link>
-      </Grid>
-    </Grid>
+    </div>
   );
 };
 

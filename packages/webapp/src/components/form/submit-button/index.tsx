@@ -25,9 +25,10 @@ const SubmitButton = (props: SubmitButton): React.ReactElement => {
       disabled={disabled}
       style={{
         width: '100%',
-        height: '53px',
+        height: '44px',
         marginTop: '16px',
-        fontSize: '18px',
+        fontWeight: 700,
+        fontSize: '0.875rem',
       }}
     >
       {value}

@@ -36,10 +36,10 @@ const communexTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          fontSize: '15px',
-          fontWeight: 600,
+          fontWeight: 700,
+          letterSpacing: '0.06em',
           whiteSpace: 'nowrap',
-          textTransform: 'none',
+          textTransform: 'uppercase',
           borderRadius: '9px',
           padding: '6px 20px 6px 20px',
         },
@@ -54,7 +54,7 @@ const communexTheme = createTheme({
     MuiFormControl: {
       styleOverrides: {
         root: {
-          marginTop: '1rem',
+          marginTop: '0',
           marginBottom: '0',
           width: '100%',
           fontSize: '1.1rem',
@@ -75,7 +75,7 @@ const communexTheme = createTheme({
   typography: {
     fontFamily: ['Roboto'].join(','),
     h4: {
-      color: '#ffa800',
+      color: '#000000',
       fontWeight: 600,
       marginBottom: '10px',
     },

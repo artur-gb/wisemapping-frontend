@@ -4,6 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { SxProps, Theme } from '@mui/material';
 import { ErrorInfo } from '../../../classes/client';
 
 type PasswordInputProps = {
@@ -17,6 +18,7 @@ type PasswordInputProps = {
   fullWidth?: boolean;
   disabled?: boolean;
   maxLength?: number;
+  sx?: SxProps<Theme>;
 };
 
 const PasswordInput = ({
@@ -30,6 +32,7 @@ const PasswordInput = ({
   fullWidth = true,
   disabled = false,
   maxLength = 254,
+  sx,
 }: PasswordInputProps): React.ReactElement => {
   const [showPassword, setShowPassword] = useState(false);
   const fieldError = error?.fields?.[name];
@@ -46,9 +49,9 @@ const PasswordInput = ({
       variant="outlined"
       required={required}
       fullWidth={fullWidth}
-      margin="dense"
       disabled={disabled}
       autoComplete={autoComplete}
+      sx={{ ...sx }}
       inputProps={{ maxLength }}
       InputProps={{
         endAdornment: (
