@@ -24,10 +24,9 @@ const SubmitButton = (props: SubmitButton): React.ReactElement => {
       disableElevation={true}
       disabled={disabled}
       style={{
-        width: '300px',
+        width: '100%',
         height: '53px',
-        padding: '0px 20px',
-        margin: '7px 0px',
+        marginTop: '16px',
         fontSize: '18px',
       }}
     >

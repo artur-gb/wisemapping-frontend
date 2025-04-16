@@ -1,18 +1,20 @@
 import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme({
+const defaultTheme = createTheme({
   components: {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
+          minHeight: '56px',
           borderRadius: '9px',
-          fontSize: '14px',
+          fontSize: '1.1rem',
+          backgroundColor: 'transparent',
           '& fieldset': {
-            border: 'solid 1px #ffcb66',
+            border: 'solid 1px #92949c',
           },
-          '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
-            borderColor: '#f9a826',
-          },
+          // '&:hover:not(.Mui-disabled):not(.Mui-focused):not(.Mui-error) fieldset': {
+          //   borderColor: '#f9a826',
+          // },
         },
       },
     },
@@ -20,8 +22,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           color: '#f9a826',
+          fontSize: '1.1rem',
         },
-
         outlined: {
           zIndex: 'inherit',
         },
@@ -40,14 +42,34 @@ const theme = createTheme({
         containedPrimary: {
           color: 'white',
           '&:hover': {
-            backgroundColor: 'rgba(249, 168, 38, 0.91)',
+            backgroundColor: '#1a5f70',
           },
+        },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          marginTop: '1rem',
+          marginBottom: '0',
+          width: '100%',
+          fontSize: '1.1rem',
+        },
+      },
+    },
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          padding: '16px !important',
+          maxWidth: '1004px !important',
+          width: '100% !important',
+          boxSizing: 'border-box',
         },
       },
     },
   },
   typography: {
-    fontFamily: ['Montserrat'].join(','),
+    fontFamily: ['Roboto'].join(','),
     h4: {
       color: '#ffa800',
       fontWeight: 600,
@@ -60,8 +82,8 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      light: '#ffa800',
-      main: '#ffa800',
+      light: '#004d60',
+      main: '#004d60',
       dark: '#ffa800',
       contrastText: '#FFFFFF',
     },
@@ -74,4 +96,4 @@ const theme = createTheme({
   },
 });
 
-export { theme };
+export { defaultTheme };

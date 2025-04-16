@@ -4,9 +4,6 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { useNavigate } from 'react-router-dom';
 import { ErrorInfo } from '../../classes/client';
 
-import Header from '../layout/header';
-import Footer from '../layout/footer';
-
 import { useMutation } from 'react-query';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
@@ -216,9 +213,7 @@ const RegistationPage = (): React.ReactElement => {
 
   return (
     <div>
-      <Header type="only-signin" />
       <RegistrationForm />
-      <Footer />
     </div>
   );
 };

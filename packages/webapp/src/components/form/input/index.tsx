@@ -35,7 +35,7 @@ const Input = ({
     <TextField
       name={name}
       type={type}
-      label={label}
+      placeholder={label}
       value={value}
       onChange={onChange}
       error={Boolean(fieldError)}

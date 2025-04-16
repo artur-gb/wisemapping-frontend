@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { ErrorInfo, ForgotPasswordResult } from '../../classes/client';
 
-import Header from '../layout/header';
-import Footer from '../layout/footer';
 import FormContainer from '../layout/form-container';
 import { useMutation } from 'react-query';
 import Input from '../form/input';
@@ -118,9 +116,7 @@ const ForgotPasswordPage = (): React.ReactElement => {
 
   return (
     <div>
-      <Header type="only-signin" />
       <ForgotPassword />
-      <Footer />
     </div>
   );
 };
