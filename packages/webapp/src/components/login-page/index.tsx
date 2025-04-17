@@ -1,15 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
-import Header from '../layout/header';
-import Footer from '../layout/footer';
+import { useIntl } from 'react-intl';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SubmitButton from '../form/submit-button';
 import Input from '../form/input';
 import GlobalError from '../form/global-error';
 import FormContainer from '../layout/form-container';
-import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
 import ReactGA from 'react-ga4';
 import Separator from '../common/separator';
 import GoogleButton from '../common/google-button';
@@ -17,6 +13,10 @@ import AppConfig from '../../classes/app-config';
 import { useMutation } from 'react-query';
 import { ErrorInfo, LoginErrorInfo } from '../../classes/client';
 import { ClientContext } from '../../classes/provider/client-context';
+import { Box } from '@mui/material';
+import { TextButton } from '../form/sign-in-button';
+import CommunexLogo from '../common/communex-icon';
+import PasswordInput from '../form/password-input';
 
 export type Model = {
   email: string;
@@ -105,83 +105,113 @@ const LoginPage = (): React.ReactElement => {
   };
 
   return (
-    <div>
-      <Header type={AppConfig.isRegistrationEnabled() ? 'only-signup' : 'none'} />
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+      }}
+    >
+      <div style={{ maxWidth: '984px', width: '100%', boxSizing: 'border-box', margin: '10px' }}>
+        <FormContainer>
+          <Box my={'16px'} width={'100%'}>
+            <CommunexLogo width={'50%'} fill="#000" />
+          </Box>
+          <LoginError errorCode={loginError} />
 
-      <FormContainer>
-        <Typography variant="h4" component="h1">
-          <FormattedMessage id="login.title" defaultMessage="Welcome" />
-        </Typography>
-
-        <Typography paragraph>
-          <FormattedMessage id="login.desc" defaultMessage="Log into your account" />
-        </Typography>
-
-        <LoginError errorCode={loginError} />
-
-        <FormControl>
-          <form onSubmit={handleOnSubmit}>
-            <Input
-              onChange={handleOnChange}
-              name="email"
-              type="email"
-              label={intl.formatMessage({
-                id: 'login.email',
-                defaultMessage: 'Email',
-              })}
-              required
-              autoComplete="email"
+          <FormControl>
+            <form onSubmit={handleOnSubmit}>
+              <Input
+                onChange={handleOnChange}
+                name="email"
+                type="email"
+                label={intl.formatMessage({
+                  id: 'login.email',
+                  defaultMessage: 'Email',
+                })}
+                required
+                autoComplete="email"
+              />
+              <PasswordInput
+                onChange={handleOnChange}
+                name="password"
+                label={intl.formatMessage({
+                  id: 'login.password',
+                  defaultMessage: 'Password',
+                })}
+                required
+                autoComplete="current-password"
+                sx={{ mt: '1rem' }}
+              />
+              <SubmitButton
+                value={intl.formatMessage({
+                  id: 'login.signin',
+                  defaultMessage: 'Sign In',
+                })}
+              />
+            </form>
+          </FormControl>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            height="32px"
+            width="100%"
+            mt={2}
+          >
+            <TextButton
+              to="/c/registration"
+              label="header.donthaveaccount"
+              defaultMessage="Register now"
             />
-            <Input
-              onChange={handleOnChange}
-              name="password"
-              type="password"
-              label={intl.formatMessage({
-                id: 'login.password',
-                defaultMessage: 'Password',
-              })}
-              required
-              autoComplete="current-password"
+            <TextButton
+              to="/c/forgot-password"
+              label="login.forgotpwd"
+              defaultMessage="Forgot Password?"
             />
-            <SubmitButton
-              value={intl.formatMessage({
-                id: 'login.signin',
-                defaultMessage: 'Sign In',
-              })}
+          </Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            height="32px"
+            width="100%"
+            mt={2}
+          >
+            <TextButton
+              to="https://www.intrakommuna.de/datenschutz"
+              label="footer.termsandconditions"
+              defaultMessage="Term And Conditions"
             />
-          </form>
-        </FormControl>
-        <Link component={RouterLink} to="/c/forgot-password">
-          <FormattedMessage id="login.forgotpwd" defaultMessage="Forgot Password ?" />
-        </Link>
-        {AppConfig.isRegistrationEnabled() && (
-          <>
-            <Separator
-              responsive={false}
-              text={intl.formatMessage({
-                id: 'login.division',
-                defaultMessage: 'or',
-              })}
-            />
-            <GoogleButton
-              text={intl.formatMessage({
-                id: 'login.google.button',
-                defaultMessage: 'Sign in with Google',
-              })}
-              onClick={() => {
-                const authUrl = AppConfig.getGoogleOauth2Url();
-                if (authUrl) {
-                  window.location.href = authUrl;
-                } else {
-                  console.log('GoogleOauth2Url is not configured.');
-                }
-              }}
-            />
-          </>
-        )}
-      </FormContainer>
-
-      <Footer />
+          </Box>
+          {AppConfig.isRegistrationEnabled() && (
+            <>
+              <Separator
+                responsive={false}
+                text={intl.formatMessage({
+                  id: 'login.division',
+                  defaultMessage: 'or',
+                })}
+              />
+              <GoogleButton
+                text={intl.formatMessage({
+                  id: 'login.google.button',
+                  defaultMessage: 'Sign in with Google',
+                })}
+                onClick={() => {
+                  const authUrl = AppConfig.getGoogleOauth2Url();
+                  if (authUrl) {
+                    window.location.href = authUrl;
+                  } else {
+                    console.log('GoogleOauth2Url is not configured.');
+                  }
+                }}
+              />
+            </>
+          )}
+        </FormContainer>
+      </div>
     </div>
   );
 };

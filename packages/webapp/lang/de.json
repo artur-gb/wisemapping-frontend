@@ -162,7 +162,7 @@
         "defaultMessage": "Andere"
     },
     "footer.termsandconditions": {
-        "defaultMessage": "Allgemeine Geschäftsbedingungen"
+        "defaultMessage": "AGB"
     },
     "forgot.desc": {
         "defaultMessage": "Wir senden dir eine E-Mail, um dein Passwort zurückzusetzen."
@@ -189,7 +189,7 @@
         "defaultMessage": "Passwort wiederhergestellt | WiseMapping"
     },
     "header.donthaveaccount": {
-        "defaultMessage": "Du hast noch kein Konto?"
+        "defaultMessage": "Jetzt registrieren"
     },
     "header.haveaccount": {
         "defaultMessage": "Du hast bereits ein Konto?"

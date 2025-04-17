@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FormContainer from '../layout/form-container';
-import Header from '../layout/header';
-import Footer from '../layout/footer';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -25,7 +23,6 @@ const ForgotPasswordSuccessPage = (): React.ReactElement => {
 
   return (
     <div>
-      <Header type="none" />
       <FormContainer>
         <Typography variant="h4" component="h1">
           <FormattedMessage
@@ -52,7 +49,6 @@ const ForgotPasswordSuccessPage = (): React.ReactElement => {
           <FormattedMessage id="login.signin" defaultMessage="Sign In" />
         </Button>
       </FormContainer>
-      <Footer />
     </div>
   );
 };
