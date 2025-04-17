@@ -1,5 +1,5 @@
 // ThemeWrapper.tsx
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { ThemeProvider as MuiThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
@@ -8,12 +8,16 @@ import { defaultTheme } from './theme/defaultTheme';
 import { communexTheme } from './theme/communexTheme';
 import { KeyboardContext } from './classes/provider/keyboard-context';
 
+const isCommunexPath = (pathname: string) =>
+  ['/c/login', '/c/registration', '/c/forgot-password'].includes(pathname);
+
 const ThemeWrapper = () => {
   const location = useLocation();
-  const isCommunex = ['/c/login', '/c/registration', '/c/forgot-password'].includes(
-    location.pathname,
+
+  const theme = useMemo(
+    () => (isCommunexPath(location.pathname) ? communexTheme : defaultTheme),
+    [location.pathname],
   );
-  const theme = isCommunex ? communexTheme : defaultTheme;
 
   const [hotkeyEnabled, setHotkeyEnabled] = useState(true);
 
@@ -44,7 +48,7 @@ const ThemeWrapper = () => {
             }`,
               `@font-face {
                font-family: 'Roboto';
-               src: url('/assets/fonts/KFOmCnqEu92Fr1Mu72xKOzY.woff2') format('woff2');
+               src: url('/assets/fonts/KFOmCnqEu92Fr1Mu5mxKOzY.woff2') format('woff2');
                font-weight: 400;
                font-style: normal;
                font-display: swap;
