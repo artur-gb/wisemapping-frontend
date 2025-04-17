@@ -368,7 +368,7 @@
   "footer.termsandconditions": [
     {
       "type": 0,
-      "value": "Allgemeine Geschäftsbedingungen"
+      "value": "AGB"
     }
   ],
   "forgot.desc": [
@@ -434,7 +434,7 @@
   "header.donthaveaccount": [
     {
       "type": 0,
-      "value": "Du hast noch kein Konto?"
+      "value": "Jetzt registrieren"
     }
   ],
   "header.haveaccount": [
@@ -636,7 +636,7 @@
   "login.email": [
     {
       "type": 0,
-      "value": "E-Mail"
+      "value": "E-Mail oder Mobilnummer"
     }
   ],
   "login.error": [
