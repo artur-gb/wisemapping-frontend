@@ -113,7 +113,7 @@ const LoginPage = (): React.ReactElement => {
         minHeight: '100vh',
       }}
     >
-      <div style={{ maxWidth: '984px', width: '100%', boxSizing: 'border-box' }}>
+      <div style={{ maxWidth: '984px', width: '100%', boxSizing: 'border-box', margin: '10px' }}>
         <FormContainer>
           <Box my={'16px'} width={'100%'}>
             <CommunexLogo width={'50%'} fill="#000" />
