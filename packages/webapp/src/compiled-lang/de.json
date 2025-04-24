@@ -642,7 +642,7 @@
   "login.error": [
     {
       "type": 0,
-      "value": "Die eingegebene E-Mail-Adresse oder das eingegebene Passwort ist ungültig."
+      "value": "Ungültige Anmeldedaten"
     }
   ],
   "login.forgotpwd": [

@@ -35,7 +35,7 @@ const PasswordInput = ({
   sx,
 }: PasswordInputProps): React.ReactElement => {
   const [showPassword, setShowPassword] = useState(false);
-  const fieldError = error?.fields?.[name];
+  const fieldError = error?.fields?.get(name);
 
   return (
     <TextField

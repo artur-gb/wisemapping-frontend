@@ -7,9 +7,6 @@ import GlobalError from '../form/global-error';
 import FormContainer from '../layout/form-container';
 import FormControl from '@mui/material/FormControl';
 import ReactGA from 'react-ga4';
-import Separator from '../common/separator';
-import GoogleButton from '../common/google-button';
-import AppConfig from '../../classes/app-config';
 import { useMutation } from 'react-query';
 import { ErrorInfo, LoginErrorInfo } from '../../classes/client';
 import { ClientContext } from '../../classes/provider/client-context';
@@ -24,45 +21,11 @@ export type Model = {
   password: string;
 };
 
-export type LoginErrorProps = {
-  errorCode: number | undefined;
-};
-
 const defaultModel: Model = { email: '', password: '' };
-
-const LoginError = ({ errorCode }: LoginErrorProps) => {
-  const intl = useIntl();
-
-  let msg: null | string = null;
-  if (errorCode) {
-    switch (errorCode) {
-      case 1:
-        msg = intl.formatMessage({
-          id: 'login.unexpected-error',
-          defaultMessage: 'Unexpected error during login. Please, try latter.',
-        });
-        break;
-      case 2:
-        msg = intl.formatMessage({
-          id: 'login.userinactive',
-          defaultMessage:
-            "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!.",
-        });
-        break;
-      default:
-        msg = intl.formatMessage({
-          id: 'login.error',
-          defaultMessage: 'The email address or password you entered is not valid.',
-        });
-    }
-  }
-  return msg ? <GlobalError error={{ msg: msg }} /> : null;
-};
 
 const LoginPage = (): React.ReactElement => {
   const intl = useIntl();
   const [model, setModel] = useState<Model>(defaultModel);
-  const [loginError, setLoginError] = useState<number | undefined>(undefined);
   const [error, setError] = useState<ErrorInfo>();
 
   const client = useContext(ClientContext);
@@ -88,7 +51,7 @@ const LoginPage = (): React.ReactElement => {
         navigate(redirectUrl);
       },
       onError: (error: LoginErrorInfo) => {
-        setLoginError(error.code);
+        setLoginError(error);
       },
     },
   );
@@ -119,6 +82,34 @@ const LoginPage = (): React.ReactElement => {
     }
 
     return errors;
+  };
+
+  const setLoginError = (error: LoginErrorInfo): void => {
+    const fieldErrors = new Map<string, string>();
+
+    const msg = (() => {
+      switch (error.code) {
+        case 1:
+          return intl.formatMessage({
+            id: 'login.unexpected-error',
+            defaultMessage: 'Unexpected error during login. Please, try later.',
+          });
+        case 2:
+          return intl.formatMessage({
+            id: 'login.userinactive',
+            defaultMessage:
+              "Sorry, your account has not been activated yet. You'll receive a notification email when it becomes active. Stay tuned!",
+          });
+        default:
+          return intl.formatMessage({
+            id: 'login.error',
+            defaultMessage: 'The email address or password you entered is not valid.',
+          });
+      }
+    })();
+
+    fieldErrors.set('email', msg);
+    setError({ fields: fieldErrors, msg: '' });
   };
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -157,7 +148,6 @@ const LoginPage = (): React.ReactElement => {
           <Box my={'16px'} width={'100%'}>
             <CommunexLogo width={'50%'} fill="#000" />
           </Box>
-          <LoginError errorCode={loginError} />
 
           <FormControl>
             <form onSubmit={handleOnSubmit}>
@@ -227,31 +217,6 @@ const LoginPage = (): React.ReactElement => {
               defaultMessage="Term And Conditions"
             />
           </Box>
-          {AppConfig.isRegistrationEnabled() && (
-            <>
-              <Separator
-                responsive={false}
-                text={intl.formatMessage({
-                  id: 'login.division',
-                  defaultMessage: 'or',
-                })}
-              />
-              <GoogleButton
-                text={intl.formatMessage({
-                  id: 'login.google.button',
-                  defaultMessage: 'Sign in with Google',
-                })}
-                onClick={() => {
-                  const authUrl = AppConfig.getGoogleOauth2Url();
-                  if (authUrl) {
-                    window.location.href = authUrl;
-                  } else {
-                    console.log('GoogleOauth2Url is not configured.');
-                  }
-                }}
-              />
-            </>
-          )}
         </FormContainer>
       </div>
     </div>
