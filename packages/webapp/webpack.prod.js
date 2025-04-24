@@ -6,6 +6,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // Add support for versel URL.
 let configUrl = '';
+const webpack = require('webpack');
+
 if (process.env.PUBLIC_URL) {
   configUrl = process.env.PUBLIC_URL;
 } else if (process.env.VERCEL_BRANCH_URL) {
@@ -43,6 +45,11 @@ module.exports = merge(common, {
         NEW_RELIC_ENABLED: process.env.NEW_RELIC_ENABLED ? process.env.NEW_RELIC_ENABLED : false,
       },
       base: configUrl,
+    }),
+    new webpack.DefinePlugin({
+      'process.env.REACT_APP_ALLOWED_DOMAINS': JSON.stringify(
+        process.env.REACT_APP_ALLOWED_DOMAINS || '',
+      ),
     }),
   ],
 });

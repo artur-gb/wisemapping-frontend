@@ -18,6 +18,7 @@ import { recaptchaContainerStyle } from './style';
 import { ClientContext } from '../../classes/provider/client-context';
 import Grid from '@mui/material/Grid';
 import { TextButton } from '../form/sign-in-button';
+import { validateEmailDomain } from '../../utils/emailValidation';
 
 export type Model = {
   email: string;
@@ -26,6 +27,23 @@ export type Model = {
   password: string;
   recaptcha: string;
 };
+
+// const allowedDomains = (process.env.REACT_APP_ALLOWED_DOMAINS ?? '')
+//   .split(',')
+//   .map((d) => d.trim().toLowerCase())
+//   .filter(Boolean);
+
+// const allowedDomains = ['gmail.com', 'yahoo.com', 'example.org', 'protonmail.com'];
+
+// const validateEmailDomain = (email: string): string | null => {
+//   const domain = email.split('@')[1]?.toLowerCase();
+
+//   if (!domain || !allowedDomains.includes(domain)) {
+//     return 'Email domain is not allowed.';
+//   }
+
+//   return null;
+// };
 
 const defaultModel: Model = { email: '', lastname: '', firstname: '', password: '', recaptcha: '' };
 
@@ -49,8 +67,49 @@ const RegistrationForm = () => {
     },
   );
 
+  const validateForm = (): Map<string, string> => {
+    const errors = new Map<string, string>();
+    const requiredMsg = intl.formatMessage({
+      id: 'validation.required',
+      defaultMessage: 'Mandatory field',
+    });
+  
+    if (!model.email?.trim()) {
+      errors.set('email', requiredMsg);
+    }
+    
+    const emailDomainError = validateEmailDomain(model.email ?? '');
+    if (model.email?.trim() && emailDomainError) {
+      errors.set('email', emailDomainError);
+    }
+  
+    if (!model.firstname?.trim()) {
+      errors.set('firstname', requiredMsg);
+    }
+  
+    if (!model.lastname?.trim()) {
+      errors.set('lastname', requiredMsg);
+    }
+  
+    if (!model.password?.trim()) {
+      errors.set('password', requiredMsg);
+    }
+  
+    return errors;
+  };
+
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+
+    const fieldErrors = validateForm();
+
+    if (fieldErrors.size > 0) {
+      setError({ fields: fieldErrors, msg: '' });
+      return;
+    }
+
+    setError(undefined);
+
     mutation.mutate(model);
   };
 
@@ -119,7 +178,8 @@ const RegistrationForm = () => {
                 <GlobalError error={error} />
                 <Input
                   name="email"
-                  type="email"
+                  type="text"
+                  required={false}
                   onChange={handleOnChange}
                   label={intl.formatMessage({
                     id: 'registration.email',
@@ -131,6 +191,7 @@ const RegistrationForm = () => {
                 <Input
                   name="firstname"
                   type="text"
+                  required={false}
                   onChange={handleOnChange}
                   label={intl.formatMessage({
                     id: 'registration.firstname',
@@ -143,6 +204,7 @@ const RegistrationForm = () => {
                 <Input
                   name="lastname"
                   type="text"
+                  required={false}
                   onChange={handleOnChange}
                   label={intl.formatMessage({
                     id: 'registration.lastname',
@@ -155,6 +217,7 @@ const RegistrationForm = () => {
                 <Input
                   name="password"
                   type="password"
+                  required={false}
                   onChange={handleOnChange}
                   label={intl.formatMessage({
                     id: 'registration.password',

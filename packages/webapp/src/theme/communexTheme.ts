@@ -33,6 +33,18 @@ const communexTheme = createTheme({
         },
       },
     },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginTop: '0.4rem',
+          marginLeft: 0,
+          marginRight: 0,
+          paddingLeft: '1rem',
+          fontSize: '0.8rem',
+          maxHeight: '14px',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
