@@ -554,5 +554,8 @@
 	},
 	"forgot.oauth.back": {
 	  "defaultMessage": "Zurück zur Anmeldung"
-	}
+	},
+    "validation.required": {
+      "defaultMessage": "Pflichtfeld"
+    }
 }

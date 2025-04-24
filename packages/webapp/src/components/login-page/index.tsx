@@ -17,6 +17,7 @@ import { Box } from '@mui/material';
 import { TextButton } from '../form/sign-in-button';
 import CommunexLogo from '../common/communex-icon';
 import PasswordInput from '../form/password-input';
+import { validateEmailDomain } from '../../utils/emailValidation';
 
 export type Model = {
   email: string;
@@ -62,6 +63,7 @@ const LoginPage = (): React.ReactElement => {
   const intl = useIntl();
   const [model, setModel] = useState<Model>(defaultModel);
   const [loginError, setLoginError] = useState<number | undefined>(undefined);
+  const [error, setError] = useState<ErrorInfo>();
 
   const client = useContext(ClientContext);
   const navigate = useNavigate();
@@ -91,9 +93,46 @@ const LoginPage = (): React.ReactElement => {
     },
   );
 
+  const validateForm = (): Map<string, string> => {
+    const errors = new Map<string, string>();
+    const requiredMsg = intl.formatMessage({
+      id: 'validation.required',
+      defaultMessage: 'Mandatory field',
+    });
+
+    const invalidDomainMsg = intl.formatMessage({
+      id: 'validation.email-domain',
+      defaultMessage: 'Email domain is not allowed.',
+    });
+
+    if (!model.email?.trim()) {
+      errors.set('email', requiredMsg);
+    }
+
+    const emailDomainError = validateEmailDomain(model.email ?? '', invalidDomainMsg);
+    if (model.email?.trim() && emailDomainError) {
+      errors.set('email', emailDomainError);
+    }
+
+    if (!model.password?.trim()) {
+      errors.set('password', requiredMsg);
+    }
+
+    return errors;
+  };
+
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    mutation.mutate(model);
     event.preventDefault();
+
+    const fieldErrors = validateForm();
+
+    if (fieldErrors.size > 0) {
+      setError({ fields: fieldErrors, msg: '' });
+      return;
+    }
+
+    setError(undefined);
+    mutation.mutate(model);
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -122,27 +161,30 @@ const LoginPage = (): React.ReactElement => {
 
           <FormControl>
             <form onSubmit={handleOnSubmit}>
+              <GlobalError error={error} />
               <Input
                 onChange={handleOnChange}
                 name="email"
-                type="email"
+                type="text"
+                required={false}
                 label={intl.formatMessage({
                   id: 'login.email',
                   defaultMessage: 'Email',
                 })}
-                required
                 autoComplete="email"
+                error={error}
               />
               <PasswordInput
                 onChange={handleOnChange}
                 name="password"
+                required={false}
                 label={intl.formatMessage({
                   id: 'login.password',
                   defaultMessage: 'Password',
                 })}
-                required
                 autoComplete="current-password"
                 sx={{ mt: '1rem' }}
+                error={error}
               />
               <SubmitButton
                 value={intl.formatMessage({

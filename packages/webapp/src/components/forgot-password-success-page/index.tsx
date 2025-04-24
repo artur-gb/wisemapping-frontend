@@ -22,7 +22,14 @@ const ForgotPasswordSuccessPage = (): React.ReactElement => {
   });
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+      }}
+    >
       <FormContainer>
         <Typography variant="h4" component="h1">
           <FormattedMessage

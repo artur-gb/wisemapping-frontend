@@ -2,9 +2,13 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // Add support for versel URL.
 let configUrl = '';
+const webpack = require('webpack');
+require('dotenv').config();
+
 if (process.env.PUBLIC_URL) {
   configUrl = process.env.PUBLIC_URL;
 } else if (process.env.VERCEL_BRANCH_URL) {
@@ -19,17 +23,34 @@ module.exports = merge(common, {
     splitChunks: {
       minSize: 240000,
       maxSize: 240000,
-    }
+    },
   },
   plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'public'),
+          to: '',
+          globOptions: {
+            ignore: ['**/index.html'],
+          },
+        },
+      ],
+    }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public/index.html'),
       templateParameters: {
-        GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED ? process.env.GOOGLE_ADDS_ENABLED : false,
+        GOOGLE_ADDS_ENABLED: process.env.GOOGLE_ADDS_ENABLED
+          ? process.env.GOOGLE_ADDS_ENABLED
+          : false,
         NEW_RELIC_ENABLED: process.env.NEW_RELIC_ENABLED ? process.env.NEW_RELIC_ENABLED : false,
-
       },
       base: configUrl,
+    }),
+    new webpack.DefinePlugin({
+      'process.env.REACT_APP_ALLOWED_DOMAINS': JSON.stringify(
+        process.env.REACT_APP_ALLOWED_DOMAINS || '',
+      ),
     }),
   ],
 });

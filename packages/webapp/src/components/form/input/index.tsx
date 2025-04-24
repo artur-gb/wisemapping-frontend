@@ -33,7 +33,7 @@ const Input = ({
   maxLength = 254,
   sx,
 }: InputProps): React.ReactElement => {
-  const fieldError = error?.fields?.[name];
+  const fieldError = error?.fields?.get(name);
   return (
     <TextField
       name={name}

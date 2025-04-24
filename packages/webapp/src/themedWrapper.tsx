@@ -9,7 +9,13 @@ import { communexTheme } from './theme/communexTheme';
 import { KeyboardContext } from './classes/provider/keyboard-context';
 
 const isCommunexPath = (pathname: string) =>
-  ['/c/login', '/c/registration', '/c/forgot-password'].includes(pathname);
+  [
+    '/c/login',
+    '/c/registration',
+    '/c/registration-success',
+    '/c/forgot-password',
+    '/c/forgot-password-success',
+  ].includes(pathname);
 
 const ThemeWrapper = () => {
   const location = useLocation();
