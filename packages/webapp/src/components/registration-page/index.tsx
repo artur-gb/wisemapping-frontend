@@ -28,23 +28,6 @@ export type Model = {
   recaptcha: string;
 };
 
-// const allowedDomains = (process.env.REACT_APP_ALLOWED_DOMAINS ?? '')
-//   .split(',')
-//   .map((d) => d.trim().toLowerCase())
-//   .filter(Boolean);
-
-// const allowedDomains = ['gmail.com', 'yahoo.com', 'example.org', 'protonmail.com'];
-
-// const validateEmailDomain = (email: string): string | null => {
-//   const domain = email.split('@')[1]?.toLowerCase();
-
-//   if (!domain || !allowedDomains.includes(domain)) {
-//     return 'Email domain is not allowed.';
-//   }
-
-//   return null;
-// };
-
 const defaultModel: Model = { email: '', lastname: '', firstname: '', password: '', recaptcha: '' };
 
 const RegistrationForm = () => {
@@ -78,7 +61,12 @@ const RegistrationForm = () => {
       errors.set('email', requiredMsg);
     }
     
-    const emailDomainError = validateEmailDomain(model.email ?? '');
+    const invalidDomainMsg = intl.formatMessage({
+      id: 'validation.email-domain',
+      defaultMessage: 'Email domain is not allowed.',
+    });
+
+    const emailDomainError = validateEmailDomain(model.email ?? '', invalidDomainMsg);
     if (model.email?.trim() && emailDomainError) {
       errors.set('email', emailDomainError);
     }

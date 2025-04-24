@@ -993,6 +993,12 @@
       "value": "E-Mail"
     }
   ],
+  "validation.email-domain":[
+    {
+      "type": 0,
+      "value": "Diese E-Mail-Domain ist nicht erlaubt."
+    }
+  ],
   "registration.firstname": [
     {
       "type": 0,

@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 // Add support for versel URL.
 let configUrl = '';
 const webpack = require('webpack');
+require('dotenv').config();
 
 if (process.env.PUBLIC_URL) {
   configUrl = process.env.PUBLIC_URL;

@@ -100,11 +100,16 @@ const LoginPage = (): React.ReactElement => {
       defaultMessage: 'Mandatory field',
     });
 
+    const invalidDomainMsg = intl.formatMessage({
+      id: 'validation.email-domain',
+      defaultMessage: 'Email domain is not allowed.',
+    });
+
     if (!model.email?.trim()) {
       errors.set('email', requiredMsg);
     }
 
-    const emailDomainError = validateEmailDomain(model.email ?? '');
+    const emailDomainError = validateEmailDomain(model.email ?? '', invalidDomainMsg);
     if (model.email?.trim() && emailDomainError) {
       errors.set('email', emailDomainError);
     }
